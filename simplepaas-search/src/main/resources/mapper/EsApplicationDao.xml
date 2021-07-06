@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.remmy.simplepaas.search.dao.EsApplicationDao">
+    <resultMap id="BaseResultMap" type="com.remmy.simplepaas.search.domain.EsApplication">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="deploy_mode" jdbcType="VARCHAR" property="deployMode"/>
+        <result column="command" jdbcType="VARCHAR" property="command"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="pull_policy" jdbcType="VARCHAR" property="pullPolicy"/>
+        <result column="target" jdbcType="INTEGER" property="target"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <select id="listAllEsApplication" resultMap="BaseResultMap">
+        SELECT t.id as id,
+        t.name as name,
+        t.description as description,
+        t.deploy_mode as deploy_mode,
+        t.command as command,
+        t.image as image,
+        t.pull_policy as pull_policy,
+        t.target as target,
+        t.create_time as create_time
+        FROM application_define t
+        <where>
+            <if test="id != null">
+                t.id = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>

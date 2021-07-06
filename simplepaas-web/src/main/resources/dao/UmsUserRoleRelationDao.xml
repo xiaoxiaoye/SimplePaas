@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.remmy.simplepaas.dao.UmsUserRoleRelationDao">
+    <select id="getUserResource" parameterType="java.lang.Long" resultType="com.remmy.simplepaas.model.UmsResource">
+        SELECT t.id          as id,
+               t.create_time as createTime,
+               t.description as description,
+               t.name        as name,
+               t.url         as url
+        FROM ums_user_role_relation uurr
+                 LEFT JOIN ums_role ur ON uurr.role_id = ur.id
+                 LEFT JOIN ums_role_resource_relation urrr ON uurr.role_id = urrr.role_id
+                 LEFT JOIN ums_resource t ON t.id = urrr.resource_id
+        WHERE uurr.user_id = #{userId, jdbcType=INTEGER}
+          AND t.id IS NOT NULL
+    </select>
+</mapper>
